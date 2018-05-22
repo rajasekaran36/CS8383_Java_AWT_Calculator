@@ -15,7 +15,8 @@ class Numpan extends Panel implements ActionListener{
 	Button plus,minus,multiply, divide;
 	TextField display;
 	String op1,op2;
-	int op_flag;
+	String op_flag;
+	String data;
 	public Numpan(TextField display) {
 		this.display = display;
 		setLayout(new GridLayout(0,4));
@@ -100,42 +101,62 @@ class Numpan extends Panel implements ActionListener{
 		add(n0);
 		add(equal);
 		add(divide);
-		n1.addActionListener(this);
 	}
-	
+	public String getDisplayText(){
+		return display.getText().toString();
+	}
+	public void setDisplay(String text){
+		display.setText(text);
+	}
+	public void clearDisplay(){
+		display.setText("");
+		data = "";
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String data = display.getText().toString();
+		
+		data = getDisplayText();
+		
 		switch(e.getActionCommand()){
 		case "zero":
-			display.setText(data+"0");
+			setDisplay(data+0);
 			break;
 		case "one":
-			display.setText(data+"1");
+			setDisplay(data+1);
 			break;
 		case "two":
-			display.setText(data+"2");
+			setDisplay(data+2);
 			break;	
 		case "three":
-			display.setText(data+"3");
+			setDisplay(data+"3");
 			break;
 		case "four":
-			display.setText(data+"4");
+			setDisplay(data+"4");
 			break;
 		case "five":
-			display.setText(data+"5");
+			setDisplay(data+"5");
 			break;
 		case "six":
-			display.setText(data+"6");
+			setDisplay(data+"6");
 			break;
 		case "seven":
-			display.setText(data+"7");
+			setDisplay(data+"7");
 			break;
 		case "eight":
-			display.setText(data+"8");
+			setDisplay(data+"8");
 			break;
 		case "nine":
-			display.setText(data+"9");
+			setDisplay(data+"9");
+			break;
+		case "plus":
+			op1 = getDisplayText();
+			op_flag = "plus";
+			clearDisplay();
+		case "equal":
+			op2 = getDisplayText();
+			clearDisplay();
+			setDisplay(op1+op2);
+			op_flag = "";
 			break;
 		}
 	}
