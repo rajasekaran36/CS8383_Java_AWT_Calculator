@@ -7,6 +7,7 @@ import java.awt.Panel;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -14,9 +15,10 @@ class Numpan extends Panel implements ActionListener{
 	Button n0,n1,n2,n3,n4,n5,n6,n7,n8,n9,point,equal;
 	Button plus,minus,multiply, divide;
 	TextField display;
-	String op1,op2;
+	String op1,op2,result;
 	String op_flag;
 	String data;
+	double dop1,dop2,dresult;
 	public Numpan(TextField display) {
 		this.display = display;
 		setLayout(new GridLayout(0,4));
@@ -109,7 +111,8 @@ class Numpan extends Panel implements ActionListener{
 		display.setText(text);
 	}
 	public void clearDisplay(){
-		display.setText("");
+		System.out.println("Clear Called");
+		setDisplay("");
 		data = "";
 	}
 	@Override
@@ -119,13 +122,13 @@ class Numpan extends Panel implements ActionListener{
 		
 		switch(e.getActionCommand()){
 		case "zero":
-			setDisplay(data+0);
+			setDisplay(data+"0");
 			break;
 		case "one":
-			setDisplay(data+1);
+			setDisplay(data+"1");
 			break;
 		case "two":
-			setDisplay(data+2);
+			setDisplay(data+"2");
 			break;	
 		case "three":
 			setDisplay(data+"3");
@@ -148,21 +151,81 @@ class Numpan extends Panel implements ActionListener{
 		case "nine":
 			setDisplay(data+"9");
 			break;
+		
 		case "plus":
-			op1 = getDisplayText();
+			op1 = data;
 			op_flag = "plus";
 			clearDisplay();
-		case "equal":
-			op2 = getDisplayText();
-			clearDisplay();
-			setDisplay(op1+op2);
-			op_flag = "";
 			break;
+		case "minus":
+			op1 = data;
+			op_flag = "minus";
+			clearDisplay();
+			break;
+		case "multiply":
+			op1 = data;
+			op_flag = "multiply";
+			clearDisplay();
+			break;
+		
+		case "divide":
+			op1 = data;
+			op_flag = "divide";
+			clearDisplay();
+			break;
+			
+		case "equal":
+			switch(op_flag){
+			case "plus":
+				op2 = data;
+				clearDisplay();
+				dop1 = Double.parseDouble(op1);
+				dop2 = Double.parseDouble(op2);
+				dresult = dop1 + dop2;
+				result = String.valueOf(dresult);
+				setDisplay(result);
+				op_flag = "";
+				break;
+			case "minus":
+				op2 = data;
+				clearDisplay();
+				dop1 = Double.parseDouble(op1);
+				dop2 = Double.parseDouble(op2);
+				dresult = dop1 - dop2;
+				result = String.valueOf(dresult);
+				setDisplay(result);
+				op_flag = "";
+				break;
+			
+			case "multiply":
+				op2 = data;
+				clearDisplay();
+				dop1 = Double.parseDouble(op1);
+				dop2 = Double.parseDouble(op2);
+				dresult = dop1 * dop2;
+				result = String.valueOf(dresult);
+				setDisplay(result);
+				op_flag = "";
+				break;
+				
+			case "divide":
+				op2 = data;
+				clearDisplay();
+				dop1 = Double.parseDouble(op1);
+				dop2 = Double.parseDouble(op2);
+				dresult = dop1 / dop2;
+				result = String.valueOf(dresult);
+				setDisplay(result);
+				op_flag = "";
+				break;
+				
+				
+			}
 		}
 	}
 }
 
-class Calculator extends Frame implements WindowListener{
+class Calculator extends Frame {
 	TextField display;
 	public Calculator() {
 		display = new TextField();
@@ -172,47 +235,12 @@ class Calculator extends Frame implements WindowListener{
 		add(display,BorderLayout.NORTH);
 		setVisible(true);
 		setSize(300,300);
-		addWindowListener(this);
-	}
-	
-	@Override
-	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void windowClosing(WindowEvent e) {
-		// TODO Auto-generated method stub
-		dispose();
-	}
-
-	@Override
-	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				dispose();
+			}
+		});
 	}
 	
 }
