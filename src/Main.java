@@ -229,12 +229,12 @@ class Calculator extends Frame {
 	TextField display;
 	public Calculator() {
 		display = new TextField();
-		display.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		display.setFont(new Font("Times New Roman", Font.BOLD, 50));
 		setLayout(new BorderLayout());
 		add(new Numpan(display),BorderLayout.CENTER);
 		add(display,BorderLayout.NORTH);
 		setVisible(true);
-		setSize(300,300);
+		setSize(500,500);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
